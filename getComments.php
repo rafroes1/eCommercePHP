@@ -6,12 +6,16 @@
 			$sql = $GLOBALS['db']->prepare('SELECT product_id, rating, images, text FROM comments WHERE product_id = :id');
         	$sql->bindValue(':id', $id);
         	$sql->execute();
+        	$count = $sql->rowCount();
 
-        	if($comments = $sql->fetch(PDO::FETCH_ASSOC)){
-        		//todo: arrumar aqui que ta retornando so um comentario e nao todos
+        	if($count > 0){
+        		$comments = array();
+        		while($row = $sql->fetch(PDO::FETCH_ASSOC)){
+        			array_push($comments, $row);
+        		}
         		return $comments;
         	}else{
-        		return 0;
+        		return $count;
         	}
         }catch (Exception $e){
     		$myObj = new stdClass();
