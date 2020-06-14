@@ -68,7 +68,7 @@
         	if($history != 0){
         		$myObj->history = $history;
         	}else{
-    			$myObj->message = "No comments";
+    			$myObj->message = "No items bought";
         	}
 
         	echo json_encode($myObj);
