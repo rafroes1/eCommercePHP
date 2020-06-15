@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 07, 2020 at 03:53 PM
+-- Generation Time: Jun 15, 2020 at 12:32 PM
 -- Server version: 5.7.30-0ubuntu0.18.04.1
 -- PHP Version: 7.4.6
 
@@ -35,6 +35,7 @@ CREATE TABLE `carts` (
   `fullname` varchar(255) NOT NULL,
   `phone` varchar(255) NOT NULL,
   `address` varchar(255) NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '1',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL
@@ -44,8 +45,19 @@ CREATE TABLE `carts` (
 -- Dumping data for table `carts`
 --
 
-INSERT INTO `carts` (`id`, `user_id`, `total`, `fullname`, `phone`, `address`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(4, 1, 440, 'Demo', '123456', '123 King St', '2020-06-07 11:43:36', '2020-06-07 11:43:36', NULL);
+INSERT INTO `carts` (`id`, `user_id`, `total`, `fullname`, `phone`, `address`, `status`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(4, 1, 440, 'Demo', '123456', '123 King St', 1, '2020-06-07 11:43:36', '2020-06-07 11:43:36', NULL),
+(5, 1, 110, 'aaa', '123456', '123 King St', 2, '2020-06-13 22:14:11', '2020-06-13 22:14:11', NULL),
+(6, 1, 110, 'aaa', '123456', '123 King St', 3, '2020-06-13 22:35:14', '2020-06-13 22:35:14', NULL),
+(7, 1, 110, 'aaa', '123456', '123 King St', 4, '2020-06-13 22:39:33', '2020-06-13 22:39:33', NULL),
+(8, 1, 110, 'aaa', '123456', '123 King St', 1, '2020-06-13 22:39:40', '2020-06-13 22:39:40', NULL),
+(9, 1, 110, 'aaa', '123456', '123 King St', 1, '2020-06-13 22:40:51', '2020-06-13 22:40:51', NULL),
+(10, 1, 110, 'aaa', '123456', '123 King St', 1, '2020-06-13 22:43:25', '2020-06-13 22:43:25', NULL),
+(11, 1, 110, 'aaa', '123456', '123 King St', 1, '2020-06-13 22:48:11', '2020-06-13 22:48:11', NULL),
+(12, 1, 110, 'aaa', '123456', '123 King St', 1, '2020-06-14 00:41:22', '2020-06-14 00:41:22', NULL),
+(13, 1, 110, 'aaa', '123456', '123 King St', 1, '2020-06-15 09:50:48', '2020-06-15 09:50:48', NULL),
+(14, 1, 110, 'aaa', '123456', '123 King St', 1, '2020-06-15 09:58:02', '2020-06-15 09:58:02', NULL),
+(15, 1, 110, 'aaa', '123456', '123 King St', 1, '2020-06-15 09:59:54', '2020-06-15 09:59:54', NULL);
 
 -- --------------------------------------------------------
 
@@ -71,7 +83,18 @@ CREATE TABLE `cart_items` (
 
 INSERT INTO `cart_items` (`id`, `cart_id`, `product_id`, `quantities`, `price`, `shipping_cost`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 4, 3, 2, 300, 30, '2020-06-07 11:43:36', '2020-06-07 11:43:36', NULL),
-(2, 4, 1, 2, 100, 10, '2020-06-07 11:43:36', '2020-06-07 11:43:36', NULL);
+(2, 4, 1, 2, 100, 10, '2020-06-07 11:43:36', '2020-06-07 11:43:36', NULL),
+(3, 5, 1, 1, 100, 10, '2020-06-13 22:14:11', '2020-06-13 22:14:11', NULL),
+(4, 6, 1, 2, 100, 10, '2020-06-13 22:35:14', '2020-06-13 22:35:14', NULL),
+(5, 7, 1, 1, 100, 10, '2020-06-13 22:39:33', '2020-06-13 22:39:33', NULL),
+(6, 8, 1, 1, 100, 10, '2020-06-13 22:39:40', '2020-06-13 22:39:40', NULL),
+(7, 9, 1, 1, 100, 10, '2020-06-13 22:40:51', '2020-06-13 22:40:51', NULL),
+(8, 10, 1, 1, 100, 10, '2020-06-13 22:43:25', '2020-06-13 22:43:25', NULL),
+(9, 11, 1, 1, 100, 10, '2020-06-13 22:48:11', '2020-06-13 22:48:11', NULL),
+(10, 12, 1, 1, 100, 10, '2020-06-14 00:41:22', '2020-06-14 00:41:22', NULL),
+(11, 13, 1, 5, 100, 10, '2020-06-15 09:50:48', '2020-06-15 09:50:48', NULL),
+(12, 14, 1, 5, 100, 10, '2020-06-15 09:58:02', '2020-06-15 09:58:02', NULL),
+(13, 15, 1, 1, 100, 10, '2020-06-15 09:59:54', '2020-06-15 09:59:54', NULL);
 
 -- --------------------------------------------------------
 
@@ -114,9 +137,9 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `description`, `price`, `shipping_cost`, `image`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'Product 1', 'Product 1', 100, 10, '', '2020-06-07 11:08:18', '2020-06-07 11:08:18', NULL),
-(2, 'Product 2', 'Product 2', 200, 20, '', '2020-06-07 11:08:18', '2020-06-07 11:08:18', NULL),
-(3, 'Product 3', 'Product 3', 300, 30, '', '2020-06-07 11:08:18', '2020-06-07 11:08:18', NULL);
+(1, 'Product 1', 'Product one description', 100, 10, 'product1.jpg', '2020-06-07 11:08:18', '2020-06-07 11:08:18', NULL),
+(2, 'Product 2', 'Product two description', 200, 20, 'product2.jpg', '2020-06-07 11:08:18', '2020-06-07 11:08:18', NULL),
+(3, 'Product 3', 'Product three description', 300, 30, 'product3.jpg', '2020-06-07 11:08:18', '2020-06-07 11:08:18', NULL);
 
 -- --------------------------------------------------------
 
@@ -191,13 +214,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `cart_items`
 --
 ALTER TABLE `cart_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `comments`
