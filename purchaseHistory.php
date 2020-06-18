@@ -1,7 +1,7 @@
 <?php
 	require 'connection.php';
 
-	//return all productsId that the user bought in life
+	//add product name and price
 	function getHistory($id){
 		try{
 			$sql = $GLOBALS['db']->prepare('SELECT ci.product_id, ci.quantities

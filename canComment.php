@@ -3,7 +3,6 @@
 
 	function canComment($productId, $userId){
 		try{
-			//query return the quantity of the product that was purchased, if it was.
 			$sql = $GLOBALS['db']->prepare('SELECT COUNT(c.id) AS numberOfCarts FROM carts AS c, cart_items AS ci WHERE c.checkedout = 1 AND c.user_id = :userId AND ci.product_id = :productId');
         	$sql->bindValue(':productId', $productId);
         	$sql->bindValue(':userId', $userId);

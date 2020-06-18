@@ -1,6 +1,8 @@
 <?php 
 	require 'connection.php';
 
+
+	//add user name and date of comment
 	function getComments($id){
 		try{
 			$sql = $GLOBALS['db']->prepare('SELECT product_id, rating, images, text FROM comments WHERE product_id = :id');
