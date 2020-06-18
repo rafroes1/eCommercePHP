@@ -32,7 +32,7 @@
         	$post = trim(file_get_contents("php://input"));
         	$json = json_decode($post, true);
             
-        	$productId = $json['id']; //contains 1
+        	$productId = $json['productId']; //contains 1
 
         	$comments = getComments($productId);
 
