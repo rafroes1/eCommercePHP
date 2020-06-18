@@ -7,10 +7,12 @@ if($http_verb == 'get') {
   $myObj = new stdClass();
   if(isset($_SESSION['cart'])) {
     $myObj->success = true;
-    $myObj->cart = $_SESSION['cart'];
+    $myObj->message = "";
+    $myObj->products = getProducts();
   } else {
     $myObj->success = true;
     $myObj->message = "Cart is empty.";
+    $myObj->products = [];
   }
   echo json_encode($myObj);
 }
@@ -78,10 +80,14 @@ else if($http_verb == 'delete') {
         $post = trim(file_get_contents("php://input"));
         $json = json_decode($post, true);
 
-        unset($_SESSION['cart'][$json['product_id']]);
-
-        $myObj->success = true;
-        $myObj->message = "Product was removed from cart successfully.";
+        if(isset($_SESSION['cart'][$json['product_id']])) {
+          unset($_SESSION['cart'][$json['product_id']]);
+          $myObj->success = true;
+          $myObj->message = "Product was removed from cart successfully.";
+        } else {
+          $myObj->success = false;
+          $myObj->message = "Product is not exist in your cart.";
+        }
       }
       else if($_GET['action'] == 'clear') {
         unset($_SESSION['cart']);
@@ -103,6 +109,19 @@ else if($http_verb == 'delete') {
   }
 
   echo json_encode($myObj);
+}
+
+function getProducts() {
+  $products = [];
+  foreach ($_SESSION['cart'] as $item) {
+    $cmd = 'SELECT name, description, price, shipping_cost, image FROM products WHERE id = :id AND deleted_at IS NULL';
+    $sql = $GLOBALS['db']->prepare($cmd);
+    $sql->bindValue(':id', $item['product_id']);
+    $sql->execute();
+    $product = $sql->fetch(PDO::FETCH_ASSOC);
+    $products[] = $product;
+  }
+  return $products;
 }
 
 function add($product_id) {
@@ -141,7 +160,7 @@ function checkout($json) {
   // save cart
   $cmd = 'INSERT INTO carts (user_id, fullname, phone, address) VALUES (:user_id, :fullname, :phone, :address)';
   $sql = $GLOBALS['db']->prepare($cmd);
-  $sql->bindValue(':user_id', $_SESSION['userId']);
+  $sql->bindValue(':user_id', $_SESSION['userId']); // <--------------------------------
   foreach (['fullname', 'phone', 'address'] as $field) {
     $sql->bindValue(":$field", $json[$field]);
   }
