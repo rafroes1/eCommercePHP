@@ -1,53 +1,45 @@
 <?php 
-	require 'connection.php';
+    require 'connection.php';
 
-	function getAllProducts(){
-		try{
-			$sql = $GLOBALS['db']->prepare('SELECT * FROM products');
-        	$sql->execute();
-        	$count = $sql->rowCount();
+    function getAllProducts() {
+        try {
+            $sql = $GLOBALS['db']->prepare('SELECT id, name, description, price, shipping_cost, image FROM products WHERE deleted_at IS NULL');
+            $sql->execute();
+            $count = $sql->rowCount();
 
-        	if($count > 0){
-        		$products = array();
-        		while($row = $sql->fetch(PDO::FETCH_ASSOC)){
-        			array_push($products, $row);
-        		}
-        		return $products;
-        	}else{
-        		return $count;
-        	}
-        }catch (Exception $e){
-    		$myObj = new stdClass();
-    		$myObj->message = "Problem with the query/database";
-    		echo json_encode($myObj);
-  		}
+            $products = array();
+            if($count > 0){
+                while($row = $sql->fetch(PDO::FETCH_ASSOC)){
+                    array_push($products, $row);
+                }
+            }
+            return $products;
+        } catch (Exception $e) {
+            $myObj = new stdClass();
+            $myObj->message = "Problem with the query/database";
+            echo json_encode($myObj);
+        }
     }
 
-    try{
-		$http_verb = strtolower($_SERVER['REQUEST_METHOD']);
+    try {
+        $http_verb = strtolower($_SERVER['REQUEST_METHOD']);
+        $myObj = new stdClass();
 
-		if ($http_verb == 'get') {
+        if ($http_verb == 'get') {
+            $products = getAllProducts();
 
-        	$get = trim(file_get_contents("php://input"));
-        	$json = json_encode($get, true);
-            
-
-        	$products = getAllProducts();
-
-        	$myObj = new stdClass();
-
-        	if($products != 0){
-        		$myObj->products = $products;
-        	}else{
-    			$myObj->message = "No products";
-        	}
-
-        	echo json_encode($myObj);
+            $myObj->success = true;
+            $myObj->message = $products ? "" : "No products.";
+            $myObj->products = $products;
+        } else {
+            $myObj->success = false;
+            $myObj->message = "Wrong method.";
         }
         
-	}catch (Exception $e){
-    	$myObj = new stdClass();
-    	$myObj->message = "Something went wrong, please try again later";
-    	echo json_encode($myObj);
-  	}
+        echo json_encode($myObj);
+    } catch (Exception $e) {
+        $myObj = new stdClass();
+        $myObj->message = "Something went wrong, please try again later";
+        echo json_encode($myObj);
+    }
 ?>
