@@ -8,8 +8,7 @@
 												WHERE c.id = ci.cart_id 
     												AND c.status = 3 
         											AND c.user_id = :id 
-        											AND ci.product_id = p.id
-    											GROUP BY ci.product_id');
+        											AND ci.product_id = p.id');
         	$sql->bindValue(':id', $id);
         	$sql->execute();
         	$count = $sql->rowCount();
@@ -25,7 +24,7 @@
         	}
 		}catch (Exception $e){
     		$myObj = new stdClass();
-    		$myObj->message = "Problem with the query/database";
+    		$myObj->message = $e;
     		echo json_encode($myObj);
   		}
 	}
@@ -51,10 +50,6 @@
         	}
 
         	echo json_encode($myObj);
-    	}else if ($http_verb == 'get') {
-    		//TODO
-    	}else if ($http_verb == 'delete') {
-        	//TODO
     	}
 	}catch (Exception $e){
     	$myObj = new stdClass();

@@ -36,10 +36,6 @@
         	$myObj->inserted = $inserted;
 
         	echo json_encode($myObj);
-    	}else if ($http_verb == 'get') {
-    		//TODO
-    	}else if ($http_verb == 'delete') {
-        	//TODO
     	}
 	}catch (Exception $e){
     	$myObj = new stdClass();

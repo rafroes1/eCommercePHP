@@ -3,7 +3,7 @@
 
 	function canComment($productId, $userId){
 		try{
-			$sql = $GLOBALS['db']->prepare('SELECT COUNT(c.id) AS numberOfCarts FROM carts AS c, cart_items AS ci WHERE c.checkedout = 1 AND c.user_id = :userId AND ci.product_id = :productId');
+			$sql = $GLOBALS['db']->prepare('SELECT COUNT(c.id) AS numberOfCarts FROM carts AS c, cart_items AS ci WHERE c.status = 3 AND c.user_id = :userId AND ci.product_id = :productId');
         	$sql->bindValue(':productId', $productId);
         	$sql->bindValue(':userId', $userId);
         	$sql->execute();
@@ -29,8 +29,8 @@
         	$post = trim(file_get_contents("php://input"));
         	$json = json_decode($post, true);
             
-        	$productId = $json['productId']; //contains 1
-        	$userId = $json['userId']; //contains 2
+        	$productId = $json['productId'];
+        	$userId = $json['userId'];
 
         	$canComment = canComment($productId, $userId);
 
@@ -39,10 +39,6 @@
         	$myObj->canComment = $canComment;
 
         	echo json_encode($myObj);
-    	}else if ($http_verb == 'get') {
-    		//TODO
-    	}else if ($http_verb == 'delete') {
-        	//TODO
     	}
 	}catch (Exception $e){
     	$myObj = new stdClass();
