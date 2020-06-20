@@ -31,9 +31,11 @@ if ($http_verb == 'post')
 
         updateUserToDB($id, $username, $fullname, $phone, $address);
         $myObj->success = true;
+        $myObj->message = "Profile was updated successfully.";
 
         echo json_encode($myObj);
       } else {
+        $myObj->success = false;
         $myObj->message = "Please login into your account.";
         echo json_encode($myObj);
       }

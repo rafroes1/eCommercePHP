@@ -42,6 +42,7 @@ require 'connection.php';
   {
     try
     {
+        $myObj = new stdClass();
         $post = trim(file_get_contents("php://input"));
         $json = json_decode($post, true); 
         $email = $json['email'];
@@ -54,20 +55,15 @@ require 'connection.php';
         if (isUnknownEmail($email))
         {
             $userId = addUserToDB($username, $email, $password, $fullname, $phone, $address);
-
-            $myObj = new stdClass();
-            $myObj->isLoggedIn = $userId > 0;
-            $myObj->message = $userId > 0 ? "" : "something went wrong. Please try again.";
-            
-            $_SESSION['userId'] = $userId;
+            $myObj->success = true;
+            $myObj->message = $userId > 0 ? "Your account was created successfully. Please login into the system." : "something went wrong. Please try again.";
 
             echo json_encode($myObj);
         }
         else
         {
-            $myObj = new stdClass();
-            $myObj->isLoggedIn = false;
-            $myObj->message = "email already has account. Try to log in instead";
+            $myObj->success = false;
+            $myObj->message = "Email already has account. Try to log in instead.";
             echo json_encode($myObj);
         }
     }
