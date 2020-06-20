@@ -1,15 +1,42 @@
 <?php 
 require 'connection.php';
-$http_verb = strtolower($_SERVER['REQUEST_METHOD']);
 
+function updateUserToDB($id, $username, $fullname, $phone, $address)
+{
+  $cmd = 'UPDATE users SET username = :username, fullname = :fullname, phone = :phone, address = :address WHERE id = :id';
+  $sql = $GLOBALS['db']->prepare($cmd);
+  $sql->bindValue(':username', $username);
+  $sql->bindValue(':fullname', $fullname);
+  $sql->bindValue(':phone', $phone);
+  $sql->bindValue(':address', $address);
+  $sql->bindValue(':id', $id);
+  $sql->execute();
+}
+
+$http_verb = strtolower($_SERVER['REQUEST_METHOD']);
+$myObj = new stdClass();
 if ($http_verb == 'post')
 {
     try
-    { 
-      $sql = $GLOBALS['db']->prepare('UPDATE users SET email=:email, fullname=:fullname, phone=:phone, address=:address WHERE id = :id');
-      $sql->execute();
-      $myObj->message = "Successfuly updated";
-      echo json_encode($myObj);
+    {
+      if(isset($_SESSION['userId'])) {
+        $post = trim(file_get_contents("php://input"));
+        $json = json_decode($post, true);
+
+        $id = $_SESSION['userId'];
+        $username = $json['username'];
+        $fullname = $json['fullname'];
+        $phone = $json['phone'];
+        $address = $json['address'];
+
+        updateUserToDB($id, $username, $fullname, $phone, $address);
+        $myObj->success = true;
+
+        echo json_encode($myObj);
+      } else {
+        $myObj->message = "Please login into your account.";
+        echo json_encode($myObj);
+      }
     }
     catch (Exception $e) 
     {

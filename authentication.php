@@ -34,6 +34,7 @@ try
   else if ($http_verb == 'delete')
   {
       //log out
+      unset($_SESSION['userId']);
       $_SESSION['isLoggedIn'] = false;
 
       $myObj = new stdClass();

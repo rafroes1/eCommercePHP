@@ -158,9 +158,10 @@ function checkValidation($products) {
 
 function checkout($json) {
   // save cart
+  $userId = isset($_SESSION['userId']) ? $_SESSION['userId'] : null;
   $cmd = 'INSERT INTO carts (user_id, fullname, phone, address) VALUES (:user_id, :fullname, :phone, :address)';
   $sql = $GLOBALS['db']->prepare($cmd);
-  $sql->bindValue(':user_id', $_SESSION['userId']); // <--------------------------------
+  $sql->bindValue(':user_id', $userId);
   foreach (['fullname', 'phone', 'address'] as $field) {
     $sql->bindValue(":$field", $json[$field]);
   }
