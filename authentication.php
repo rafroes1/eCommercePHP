@@ -7,20 +7,24 @@ try
 
   if ($http_verb == 'post')
   {
+      $myObj = new stdClass();
       $post = trim(file_get_contents("php://input"));
       $json = json_decode($post, true);
-          
-      $email = $json['email'];
-      $password = $json['password'];
+      if(isset($json['email']) && isset($json['password'])) {
+        $email = $json['email'];
+        $password = $json['password'];
 
-      $userId = validateUser($email, $password);
-
-      $myObj = new stdClass();
-      $myObj->isLoggedIn = $userId > 0;
-      $myObj->message = $userId > 0 ? "" : "email/password does not match";
-      
-      $_SESSION['userId'] = $userId;
-      $_SESSION['isLoggedIn'] = true;
+        $userId = validateUser($email, $password);
+        
+        $myObj->isLoggedIn = $userId > 0;
+        $myObj->message = $userId > 0 ? "" : "Email or Password does not match.";
+        
+        $_SESSION['userId'] = $userId;
+        $_SESSION['isLoggedIn'] = true;
+      } else {
+        $myObj->isLoggedIn = false;
+        $myObj->message = "Missing email or password.";
+      }
 
       echo json_encode($myObj);
   }

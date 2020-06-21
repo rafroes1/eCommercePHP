@@ -22,17 +22,17 @@ else if($http_verb == 'post') {
   $myObj = new stdClass();
   if(isset($_GET['action'])) {
     if($_GET['action'] == 'add') {
-      add($json['product_id']);
+      $result = add($json['product_id'], $json['quantities']);
 
-      $myObj->success = true;
-      $myObj->message = "A new product was added to cart successfully.";
+      $myObj->success = $result->success;
+      $myObj->message = $result->message;
     }
     else if ($_GET['action'] == 'checkout') {
       if(isset($_SESSION['cart'])) {
-        checkout($json);
+        $result = checkout($json);
 
-        $myObj->success = true;
-        $myObj->message = "Purchase successful.";
+        $myObj->success = $result->success;
+        $myObj->message = $result->message;
       } else {
         $myObj->success = true;
         $myObj->message = "Cart is empty.";
@@ -119,21 +119,47 @@ function getProducts() {
     $sql->bindValue(':id', $item['product_id']);
     $sql->execute();
     $product = $sql->fetch(PDO::FETCH_ASSOC);
+    $product['quantities'] = $item['quantities'];
     $products[] = $product;
   }
   return $products;
 }
 
-function add($product_id) {
+function add($product_id, $quantities) {
+  $myObj = new stdClass();
+  $myObj->success = true;
+  $myObj->message = "A new product was added to cart successfully.";
+
+  $cmd = 'SELECT * FROM products WHERE id = :id AND deleted_at IS NULL';
+  $sql = $GLOBALS['db']->prepare($cmd);
+  $sql->bindValue(':id', $product_id);
+  $sql->execute();
+  $product = $sql->fetch(PDO::FETCH_ASSOC);
+
+  if($product == false) {
+    $myObj->success = false;
+    $myObj->message = "This product is not exist.";
+    return $myObj;
+  }
+
+  if($quantities <= 0) {
+    $myObj->success = false;
+    $myObj->message = "Quantities must greater than 0.";
+    return $myObj;
+  }
+
   if(isset($_SESSION['cart'])) {
-    if(isset($_SESSION['cart'][$product_id]))
-      $_SESSION['cart'][$product_id]['quantities'] += 1;
-    else
-      $_SESSION['cart'][$product_id] = ['product_id' => $product_id, 'quantities' => 1];
+    if(isset($_SESSION['cart'][$product_id])) {
+      $_SESSION['cart'][$product_id]['quantities'] = $quantities;
+    } else {
+      $_SESSION['cart'][$product_id] = ['product_id' => $product_id, 'quantities' => $quantities];
+    }
   } else {
     $_SESSION['cart'] = array();
-    $_SESSION['cart'][$product_id] = ['product_id' => $product_id, 'quantities' => 1];
+    $_SESSION['cart'][$product_id] = ['product_id' => $product_id, 'quantities' => $quantities];
   }
+
+  return $myObj;
 }
 
 function update($products) {
@@ -157,6 +183,18 @@ function checkValidation($products) {
 }
 
 function checkout($json) {
+  $myObj = new stdClass();
+  $myObj->success = true;
+  $myObj->message = "Purchase successful.";
+  $coupon = [];
+  if(isset($json['coupon_code'])) {
+    $coupon = checkCoupon($json['coupon_code']);
+    if($coupon == false) {
+      $myObj->success = false;
+      $myObj->message = "This coupon code is not valid.";
+      return $myObj;
+    }
+  }
   // save cart
   $userId = isset($_SESSION['userId']) ? $_SESSION['userId'] : null;
   $cmd = 'INSERT INTO carts (user_id, fullname, phone, address) VALUES (:user_id, :fullname, :phone, :address)';
@@ -189,14 +227,31 @@ function checkout($json) {
     $total += $product['price'] + $product['shipping_cost'];
   }
 
+  if($coupon) {
+    $total -= $coupon['value'];
+    $cmd = 'UPDATE carts SET coupon_id = :coupon_id, total = :total WHERE id = :id';
+  } else {
+    $cmd = 'UPDATE carts SET total = :total WHERE id = :id';
+  }
+
   // update cart total
-  $cmd = 'UPDATE carts SET total = :total WHERE id = :id';
   $sql = $GLOBALS['db']->prepare($cmd);
+  if($coupon) $sql->bindValue(':coupon_id', $coupon['id']);
   $sql->bindValue(':total', $total);
   $sql->bindValue(':id', $cart_id);
   $sql->execute();
 
   unset($_SESSION['cart']);
+  return $myObj;
+}
+
+function checkCoupon($code) {
+  $cmd = 'SELECT * FROM coupons WHERE code = :code AND status = 1 AND deleted_at IS NULL';
+  $sql = $GLOBALS['db']->prepare($cmd);
+  $sql->bindValue(':code', $code);
+  $sql->execute();
+  $coupon = $sql->fetch(PDO::FETCH_ASSOC);
+  return $coupon;
 }
 
 ?>
