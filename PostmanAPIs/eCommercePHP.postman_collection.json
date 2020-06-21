@@ -1,0 +1,2268 @@
+{
+	"info": {
+		"_postman_id": "5548c194-4389-4803-a213-56c6eeae82f3",
+		"name": "eCommercePHP",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "cart/add - invalid product id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5c9d2427-bbf0-4c5b-86f0-a9444958bb2a",
+						"exec": [
+							"pm.test(\"Add to Cart Case Invalid Product Id Test\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.success).to.eql(false);",
+							"    pm.expect(jsonData.message).to.eql(\"This product is not exist.\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"product_id\": 99999,\n\t\"quantities\": 3\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/cart.php?action=add",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"cart.php"
+					],
+					"query": [
+						{
+							"key": "action",
+							"value": "add"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cart/add - invalid quantities",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2ef3a7c9-5904-4030-a593-72152fe70606",
+						"exec": [
+							"pm.test(\"Add to Cart Case Invalid Quantities Test\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.success).to.eql(false);",
+							"    pm.expect(jsonData.message).to.eql(\"Quantities must greater than 0.\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"product_id\": 3,\n\t\"quantities\": 0\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/cart.php?action=add",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"cart.php"
+					],
+					"query": [
+						{
+							"key": "action",
+							"value": "add"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cart/add",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9b34ed46-8f9c-442f-981c-8b00713eedd4",
+						"exec": [
+							"pm.test(\"Add to Cart Test\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.success).to.eql(true);",
+							"    pm.expect(jsonData.message).to.eql(\"A new product was added to cart successfully.\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"product_id\": 3,\n\t\"quantities\": 3\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/cart.php?action=add",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"cart.php"
+					],
+					"query": [
+						{
+							"key": "action",
+							"value": "add"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cart/checkout - case guests",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8d943d53-a2bd-43cd-8f86-a8eda896f8b7",
+						"exec": [
+							"pm.test(\"Checkout Cart Case Guests Test\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.success).to.eql(true);",
+							"    pm.expect(jsonData.message).to.eql(\"Purchase successful.\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"fullname\": \"Anonymous User\",\n\t\"phone\": \"123456\",\n\t\"address\": \"123 King St\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/cart.php?action=checkout",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"cart.php"
+					],
+					"query": [
+						{
+							"key": "action",
+							"value": "checkout"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cart/add",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ff3dd8a4-160e-4144-b944-8f66becb7f13",
+						"exec": [
+							"pm.test(\"Add to Cart Test\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.success).to.eql(true);",
+							"    pm.expect(jsonData.message).to.eql(\"A new product was added to cart successfully.\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"product_id\": 3,\n\t\"quantities\": 3\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/cart.php?action=add",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"cart.php"
+					],
+					"query": [
+						{
+							"key": "action",
+							"value": "add"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cart/checkout - with invalid coupon",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "da5c0fdb-37ee-4734-8cff-f04c82320c86",
+						"exec": [
+							"pm.test(\"Checkout Cart Case Case Invalid Coupon Test\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.success).to.eql(false);",
+							"    pm.expect(jsonData.message).to.eql(\"This coupon code is not valid.\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"fullname\": \"Anonymous User\",\n\t\"phone\": \"123456\",\n\t\"address\": \"123 King St\",\n\t\"coupon_code\": \"X30xxxxxxxxx\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/cart.php?action=checkout",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"cart.php"
+					],
+					"query": [
+						{
+							"key": "action",
+							"value": "checkout"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cart/checkout - with coupon",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3b1fbf25-3ceb-4522-aa98-e04bdc16c9c8",
+						"exec": [
+							"pm.test(\"Checkout Cart With Coupon Test\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.success).to.eql(true);",
+							"    pm.expect(jsonData.message).to.eql(\"Purchase successful.\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"fullname\": \"Anonymous User\",\n\t\"phone\": \"123456\",\n\t\"address\": \"123 King St\",\n\t\"coupon_code\": \"X30\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/cart.php?action=checkout",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"cart.php"
+					],
+					"query": [
+						{
+							"key": "action",
+							"value": "checkout"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "authentication - login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "dd7a925d-9ecc-4288-b3b9-1609932f3c4e",
+						"exec": [
+							"pm.test(\"Login Test\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.isLoggedIn).to.eql(true);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"demo@gmail.com\",\n\t\"password\": \"123123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/authentication.php",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"authentication.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "authentication - login status",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2781446a-ca44-4d17-8f0f-6145a3231efa",
+						"exec": [
+							"pm.test(\"Login Status Test\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.isLoggedIn).to.eql(true);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/authentication.php",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"authentication.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "authentication - logout",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4eceb0db-2929-4868-9130-f24efbd71d0d",
+						"exec": [
+							"pm.test(\"Logout Test\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.isLoggedIn).to.eql(false);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/authentication.php",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"authentication.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create account ",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "48058d23-f37b-4265-a774-9e83402ff589",
+						"exec": [
+							"pm.test(\"Login Test\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.success).to.eql(true);",
+							"    pm.expect(jsonData.message).to.eql(\"Your account was created successfully. Please login into the system.\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"abcde@gmail.com\", \n    \"password\": \"123123\", \n    \"username\": \"abcde\", \n    \"fullname\": \"Nguyen Van abcde\", \n    \"phone\": \"123456789\" , \n    \"address\": \"100 Victoria St\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/createAccount.php",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"createAccount.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create account  - case exist email",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3376a885-5310-499d-8ae9-230bc33c510a",
+						"exec": [
+							"pm.test(\"Create Account Case Exist Email Test\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.success).to.eql(false);",
+							"    pm.expect(jsonData.message).to.eql(\"Email already has account. Try to log in instead.\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"a@gmail.com\", \n    \"password\": \"123123\", \n    \"username\": \"vana\", \n    \"fullname\": \"Nguyen Van A\", \n    \"phone\": \"123456789\" , \n    \"address\": \"100 Victoria St\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/createAccount.php",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"createAccount.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update account - case doesn't login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b912eb76-3a34-4217-b082-744495c0f1ed",
+						"exec": [
+							"pm.test(\"Update Account Case Not Login Test\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.success).to.eql(false);",
+							"    pm.expect(jsonData.message).to.eql(\"Please login into your account.\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"vana\", \n    \"fullname\": \"Nguyen Van A\", \n    \"phone\": \"123456789\" , \n    \"address\": \"100 Victoria St\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/updateAccount.php",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"updateAccount.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "profile - case doesn't login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "466db8a9-2cb7-4abf-93d3-d6922c6689e9",
+						"exec": [
+							"pm.test(\"Profile Test\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.success).to.eql(false);",
+							"    pm.expect(jsonData.message).to.eql('Please login into your account.');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"vana\", \n    \"fullname\": \"Nguyen Van A\", \n    \"phone\": \"123456789\" , \n    \"address\": \"100 Victoria St\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/account.php",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"account.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "change password - case doesn't login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "767b19e3-a5e9-45be-b1ff-97cf459d7938",
+						"exec": [
+							"pm.test(\"Change Password Case Not Login Test\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.success).to.eql(false);",
+							"    pm.expect(jsonData.message).to.eql(\"Please login into your account.\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"password\": \"123123\", \n    \"password_confirmation\": \"123123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/account.php",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"account.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "authentication - login failed",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "dba818de-6e9f-4b45-b914-ff8242b833e0",
+						"exec": [
+							"pm.test(\"Login Failed Test\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.isLoggedIn).to.eql(false);",
+							"    pm.expect(jsonData.message).to.eql('Email or Password does not match.');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"a@gmail.com\",\n\t\"password\": \"123456789\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/authentication.php",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"authentication.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "authentication - missing params",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e5a8593c-0bc6-4f0a-81aa-0bc0881f7498",
+						"exec": [
+							"pm.test(\"Login Case Missing Params Test\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.isLoggedIn).to.eql(false);",
+							"    pm.expect(jsonData.message).to.eql('Missing email or password.');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/authentication.php",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"authentication.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "authentication - login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6326587e-8bcc-4638-9357-c53166b84632",
+						"exec": [
+							"pm.test(\"Login Test\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.isLoggedIn).to.eql(true);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"demo@gmail.com\",\n\t\"password\": \"123123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/authentication.php",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"authentication.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "profile",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d503cc8d-2ac6-4ef2-aae6-d6feb4f10c87",
+						"exec": [
+							"pm.test(\"Profile Test\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.success).to.eql(true);",
+							"    pm.expect(jsonData.user).to.be.an('object').that.has.all.keys('email', 'username', 'fullname', 'phone', 'address');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"vana\", \n    \"fullname\": \"Nguyen Van A\", \n    \"phone\": \"123456789\" , \n    \"address\": \"100 Victoria St\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/account.php",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"account.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "change password",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1bcb8bd3-a59b-4907-8511-8ad55651b026",
+						"exec": [
+							"pm.test(\"Change Password Test\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.success).to.eql(true);",
+							"    pm.expect(jsonData.message).to.eql(\"Password was changed successfully.\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"password\": \"123123\", \n    \"password_confirmation\": \"123123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/account.php",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"account.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "change password - case miss params",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "aad5e4ec-81c2-46df-bbf6-53d296728ce3",
+						"exec": [
+							"pm.test(\"Change Password Missing Params Test\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.success).to.eql(false);",
+							"    pm.expect(jsonData.message).to.eql(\"Missing parameters.\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/account.php",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"account.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "change password - case not match",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "26f27676-c3c8-42b5-9fc8-1d02650db419",
+						"exec": [
+							"pm.test(\"Change Password Case Not Match Test\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.success).to.eql(false);",
+							"    pm.expect(jsonData.message).to.eql(\"Password confirmation doesn't match Password.\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"password\": \"123123\", \n    \"password_confirmation\": \"456456\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/account.php",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"account.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update account",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9f30a810-50bb-4cb0-a653-ffb9103fb85a",
+						"exec": [
+							"pm.test(\"Update Account Test\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.success).to.eql(true);",
+							"    pm.expect(jsonData.message).to.eql(\"Profile was updated successfully.\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"vana\", \n    \"fullname\": \"Nguyen Van A\", \n    \"phone\": \"123456789\" , \n    \"address\": \"100 Victoria St\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/updateAccount.php",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"updateAccount.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cart - case empty",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2ca99c3c-9750-494f-8e31-93411cd974ab",
+						"exec": [
+							"pm.test(\"Get Empty Cart Test\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.success).to.eql(true);",
+							"    pm.expect(jsonData.message).to.eql(\"Cart is empty.\");",
+							"    pm.expect(jsonData.products.length == 0).to.eql(true);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/cart.php",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"cart.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cart/update - case empty",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "402df36e-feec-4d84-8d5c-91efea8d8b63",
+						"exec": [
+							"pm.test(\"Update Empty Cart Test\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.success).to.eql(true);",
+							"    pm.expect(jsonData.message).to.eql(\"Cart is empty.\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"products\": [\n\t\t{\"id\": 1, \"quantities\": 5}\n\t]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/cart.php",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"cart.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cart/remove - case empty",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ef147b5a-c4a6-440a-87b1-276daa4584d2",
+						"exec": [
+							"pm.test(\"Remove Empty Cart Test\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.success).to.eql(true);",
+							"    pm.expect(jsonData.message).to.eql(\"Cart is empty.\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"product_id\": 2\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/cart.php?action=remove",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"cart.php"
+					],
+					"query": [
+						{
+							"key": "action",
+							"value": "remove"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cart/clear - case empty",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2a193c0d-6426-4da1-93a6-8955ee8c06be",
+						"exec": [
+							"pm.test(\"Clear Empty Cart Test\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.success).to.eql(true);",
+							"    pm.expect(jsonData.message).to.eql(\"Cart is empty.\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/cart.php?action=clear",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"cart.php"
+					],
+					"query": [
+						{
+							"key": "action",
+							"value": "clear"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cart/checkout - case empty",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4cec42f8-7d34-4639-80e9-e6f53cb11830",
+						"exec": [
+							"pm.test(\"Checkout Empty Cart Test\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.success).to.eql(true);",
+							"    pm.expect(jsonData.message).to.eql(\"Cart is empty.\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"fullname\": \"aaa\",\n\t\"phone\": \"123456\",\n\t\"address\": \"123 King St\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/cart.php?action=checkout",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"cart.php"
+					],
+					"query": [
+						{
+							"key": "action",
+							"value": "checkout"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cart - missing action",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3d6b603f-adde-4940-a77e-641f176ab4cb",
+						"exec": [
+							"pm.test(\"Missing Action Test\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.success).to.eql(false);",
+							"    pm.expect(jsonData.message).to.eql(\"Missing action.\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"product_id\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/cart.php",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"cart.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cart - wrong action",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2b5a32f6-dbb0-4260-9aec-9cebfe8812b5",
+						"exec": [
+							"pm.test(\"Wrong Action Test\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.success).to.eql(false);",
+							"    pm.expect(jsonData.message).to.eql(\"This action is not exist.\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"product_id\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/cart.php?action=test",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"cart.php"
+					],
+					"query": [
+						{
+							"key": "action",
+							"value": "test"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cart/add",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "702af87e-174e-45ac-b88a-94989e256b8e",
+						"exec": [
+							"pm.test(\"Add to Cart Test\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.success).to.eql(true);",
+							"    pm.expect(jsonData.message).to.eql(\"A new product was added to cart successfully.\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"product_id\": 1,\n\t\"quantities\": 5\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/cart.php?action=add",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"cart.php"
+					],
+					"query": [
+						{
+							"key": "action",
+							"value": "add"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cart",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "71e08c9d-f67d-433f-8d3e-50b603d8826c",
+						"exec": [
+							"pm.test(\"Get Cart Test\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.success).to.eql(true);",
+							"    pm.expect(jsonData.message).to.eql(\"\");",
+							"    pm.expect(jsonData.products.length > 0).to.eql(true);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/cart.php",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"cart.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cart/update",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "210b8c9d-35a0-4c2d-bb3b-7178cbfd6bba",
+						"exec": [
+							"pm.test(\"Update Cart Test\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.success).to.eql(true);",
+							"    pm.expect(jsonData.message).to.eql(\"Cart was updated successfully.\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"products\": [\n\t\t{\"id\": 1, \"quantities\": 5}\n\t]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/cart.php",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"cart.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cart - missing action",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "92a79e7d-f955-4648-98a5-98fc9a613a77",
+						"exec": [
+							"pm.test(\"Missing Action Test\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.success).to.eql(false);",
+							"    pm.expect(jsonData.message).to.eql(\"Missing action.\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"product_id\": 2\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/cart.php",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"cart.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cart - wrong action",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2aa25ae5-d677-4cea-8e28-64b0344f723e",
+						"exec": [
+							"pm.test(\"Wrong Action Test\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.success).to.eql(false);",
+							"    pm.expect(jsonData.message).to.eql(\"This action is not exist.\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"product_id\": 2\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/cart.php?action=test",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"cart.php"
+					],
+					"query": [
+						{
+							"key": "action",
+							"value": "test"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cart/remove - case wrong product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8414e197-a9a7-4b3f-b7f2-3b5834c29478",
+						"exec": [
+							"pm.test(\"Remove Wrong Product From Cart Test\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.success).to.eql(false);",
+							"    pm.expect(jsonData.message).to.eql(\"Product is not exist in your cart.\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"product_id\": 99999999\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/cart.php?action=remove",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"cart.php"
+					],
+					"query": [
+						{
+							"key": "action",
+							"value": "remove"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cart/remove",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2f7e95cc-8f61-45bd-8dca-ab9731a05ba6",
+						"exec": [
+							"pm.test(\"Remove Product From Cart Test\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.success).to.eql(true);",
+							"    pm.expect(jsonData.message).to.eql(\"Product was removed from cart successfully.\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"product_id\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/cart.php?action=remove",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"cart.php"
+					],
+					"query": [
+						{
+							"key": "action",
+							"value": "remove"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cart/clear",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9eff27f4-ed5f-4491-a98f-3b58b94190b1",
+						"exec": [
+							"pm.test(\"Clear Cart Test\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.success).to.eql(true);",
+							"    pm.expect(jsonData.message).to.eql(\"Cart was cleared successfully.\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/cart.php?action=clear",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"cart.php"
+					],
+					"query": [
+						{
+							"key": "action",
+							"value": "clear"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cart/add",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3e708acd-954b-458d-bd59-91b93026367a",
+						"exec": [
+							"pm.test(\"Add to Cart Test\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.success).to.eql(true);",
+							"    pm.expect(jsonData.message).to.eql(\"A new product was added to cart successfully.\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"product_id\": 1,\n\t\"quantities\": 5\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/cart.php?action=add",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"cart.php"
+					],
+					"query": [
+						{
+							"key": "action",
+							"value": "add"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cart/checkout",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6aa0f975-0b8d-4b28-a16a-f7ad785d4388",
+						"exec": [
+							"pm.test(\"Checkout Cart Test\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.success).to.eql(true);",
+							"    pm.expect(jsonData.message).to.eql(\"Purchase successful.\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"fullname\": \"Kitchener Waterloo\",\n\t\"phone\": \"(226) 123-4567\",\n\t\"address\": \"123 King St\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/cart.php?action=checkout",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"cart.php"
+					],
+					"query": [
+						{
+							"key": "action",
+							"value": "checkout"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "products",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "050ba69f-253f-4897-95f0-5e78df1fb72a",
+						"exec": [
+							"pm.test(\"Get Products Test\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.success).to.eql(true);",
+							"    pm.expect(jsonData.message).to.eql(\"\");",
+							"    pm.expect(jsonData.products.length > 0).to.eql(true);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/getAllProducts.php",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"getAllProducts.php"
+					]
+				},
+				"description": "get all product comments"
+			},
+			"response": []
+		},
+		{
+			"name": "products - wrong method",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ccd709c0-eacd-4ee9-bb6d-89ceb2a01f5e",
+						"exec": [
+							"pm.test(\"Get Products Case Wrong Method Test\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.success).to.eql(false);",
+							"    pm.expect(jsonData.message).to.eql(\"Wrong method.\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/getAllProducts.php",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"getAllProducts.php"
+					]
+				},
+				"description": "get all product comments"
+			},
+			"response": []
+		},
+		{
+			"name": "product by id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "371bf551-5bff-4742-a0ca-956a0ccdc9f8",
+						"exec": [
+							"pm.test(\"Get Product By Id Test\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.success).to.eql(true);",
+							"    pm.expect(jsonData.message).to.eql(\"\");",
+							"    pm.expect(jsonData.product).to.be.an('object').that.has.all.keys('id', 'name', 'description', 'price', 'shipping_cost', 'image');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/getProductsByID.php?id=1",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"getProductsByID.php"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				},
+				"description": "get all product comments"
+			},
+			"response": []
+		},
+		{
+			"name": "product by id - wrong method",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ae9dcb29-f59d-475d-b750-60c96e6b37fa",
+						"exec": [
+							"pm.test(\"Get Product By Id Case Wrong Method Test\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.success).to.eql(false);",
+							"    pm.expect(jsonData.message).to.eql(\"Wrong method.\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/getProductsByID.php?id=1",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"getProductsByID.php"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				},
+				"description": "get all product comments"
+			},
+			"response": []
+		},
+		{
+			"name": "product by id - case wrong id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7fafca1e-8d77-4082-9123-a2352115e4a4",
+						"exec": [
+							"pm.test(\"Get Wrong Product By Id Test\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.success).to.eql(true);",
+							"    pm.expect(jsonData.message).to.eql(\"Cannot find this product id.\");",
+							"    pm.expect(jsonData.product).to.eql(null);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/getProductsByID.php?id=9999",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"getProductsByID.php"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "9999"
+						}
+					]
+				},
+				"description": "get all product comments"
+			},
+			"response": []
+		},
+		{
+			"name": "product by id - case missing param id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5e444924-2875-4539-b571-e49b74e25dc3",
+						"exec": [
+							"pm.test(\"Missing Product Id Test\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.success).to.eql(false);",
+							"    pm.expect(jsonData.message).to.eql(\"Missing product id.\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/getProductsByID.php",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"getProductsByID.php"
+					]
+				},
+				"description": "get all product comments"
+			},
+			"response": []
+		},
+		{
+			"name": "canComment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "065a194b-89c4-478d-bb6d-735854bec137",
+						"exec": [
+							"pm.test(\"Can Comment Test\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.canComment).to.eql(true);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"productId\": 1, \n    \"userId\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/canComment.php",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"canComment.php"
+					]
+				},
+				"description": "returns if user can comment in certain product"
+			},
+			"response": []
+		},
+		{
+			"name": "getComments",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "07b9b91d-1967-4cd8-8de4-666508d7eda6",
+						"exec": [
+							"pm.test(\"Get Comments Test\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.comments.length > 0).to.eql(true);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"productId\":\"1\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/getComments.php",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"getComments.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "postComment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "75273ca3-ee15-4682-a37f-ba34796419f3",
+						"exec": [
+							"pm.test(\"Can Comment Test\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.inserted).to.eql(true);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"productId\": 1, \n    \"userId\": 1, \n    \"text\": \"testing this input\", \n    \"rating\": 5\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/postComment.php",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"postComment.php"
+					]
+				},
+				"description": "inserts a new comment to database"
+			},
+			"response": []
+		},
+		{
+			"name": "purchaseHistory",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7c43a4f6-47f9-4fab-99b3-8dc4dbc022df",
+						"exec": [
+							"pm.test(\"Purchase History Test\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.history.length > 0).to.eql(true);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"userId\":\"1\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/purchaseHistory.php",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"purchaseHistory.php"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
